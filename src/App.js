@@ -124,7 +124,7 @@ function App() {
         },
         body: JSON.stringify({ids: [id]}),
     }).then(response=>{
-      if(response.status == 200){
+      if(response.status === 200){
         setImages(Images.filter(e => e.id != id))
       }
     })
