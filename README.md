@@ -10,26 +10,20 @@ Here is my development environment
 git clone git@github.com:mzzchy/shopify_challenge.git
 cd shopify_challenge
 ```
-2. The repo is developed on `Python 3.7.6`. I recommend to use Anaconda to create virtual enironemnt with sepcific Python version. Here is the [instruction](https://www.digitalocean.com/community/tutorials/how-to-install-anaconda-on-ubuntu-18-04-quickstart)
+2. I recommend use Anaconda to create virtual enironemnt before installing it. Here is the [instruction](https://www.digitalocean.com/community/tutorials/how-to-install-anaconda-on-ubuntu-18-04-quickstart)
+
 3. Install backend server
 ```
-pip install ./server
+pip install .
 ```
-4. Setup Database
+4. Start the Backend Server
 ```
-cd sql
-python init_db.py
-cd ..
-```
-
-5. Start the Backend Server
-```
-cd server
 export FLASK_APP=server
 export FLASK_ENV=development
 flask run
 ``` 
-To verify the backend is setup successfully, please go to `http://localhost:5000/` and make sure you see `Welcome to image repo backend`.
+To verify the backend is setup successfully, please go to `http://localhost:5000/` and make sure you see `welcome to image repo backend`.
+
 6. In another terminal, start the Front End
 ```
 npm install 
@@ -45,13 +39,13 @@ The frontend is writted by ReactJS and the backend is writted by Python with Fla
 1. Upload one/bulk images
 2. Show uploaded images in grid
 3. Delete one/bulk images (The frontend of Bulk deletion hasn't been implemented but the API is provided)
+4. Search by image name
+5. Pytest for all api endpoints
 
 ## TODO(I will try to finish these feature before the deadline):
 1. Set a independent name for uploaded image. (Almost front end)
-2. Search by Image Name. (archieved by front end)
-3. Setup Authorization system to allow user create accounts and mark image as privated or public
-4. Lazy load image.
-5. Adding pyTest to backend 
+2. Setup Authorization system to allow user create accounts and mark image as privated or public
+3. Lazy load image.
 
 
 ## Further Thought

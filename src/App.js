@@ -1,15 +1,16 @@
-import './App.css';
-import Divider from '@material-ui/core/Divider';
-import Button from '@material-ui/core/Button';
 import React, { useState, useEffect } from 'react';
-import ImageList from '@material-ui/core/ImageList';
-import ImageListItem from '@material-ui/core/ImageListItem';
-import ImageListItemBar from '@material-ui/core/ImageListItemBar';
 import { makeStyles } from '@material-ui/core/styles';
-import IconButton from '@material-ui/core/IconButton';
-import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import { Divider, Button, ImageList, ImageListItem, ImageListItemBar, IconButton } from '@material-ui/core';
+import { Input }  from '@mui/material';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
 const useStyles = makeStyles((theme) => ({
+  app:{
+    textAlign: 'center',
+    height: '95vh',
+    display: 'block',
+    overflow: 'auto',
+  },
   root: {
     display: 'flex',
     flexWrap: 'wrap',
@@ -21,8 +22,6 @@ const useStyles = makeStyles((theme) => ({
   imageList: {
     width: '800px',
     height: '100%',
-    // overflowY: 'scroll',
-    // Promote the list into its own layer in Chrome. This cost memory, but helps keep FPS high.
     transform: 'translateZ(0)',
     '&::-webkit-scrollbar': {
       width: '0.4em'
@@ -36,6 +35,9 @@ const useStyles = makeStyles((theme) => ({
       outline: '1px solid slategrey'
     }
   },
+  actions:{
+    marginTop: '5px'
+  },
   titleBar: {
     background:
       'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, ' +
@@ -44,13 +46,19 @@ const useStyles = makeStyles((theme) => ({
   icon: {
     color: 'white',
   },
+  search_name_input: {
+    size: "small",
+    marginLeft: '10px'
+  }
 }));
 
 function App() {
 
-  const [Images, setImages] = useState([]);
-
   const classes = useStyles();
+
+  const [Images, setImages] = useState([]);
+  const [searchName, setSearchName] = useState(null)
+  
 
   useEffect(() => {
     fetchImages().then(fetched_images => {
@@ -125,16 +133,17 @@ function App() {
         body: JSON.stringify({ids: [id]}),
     }).then(response=>{
       if(response.status === 200){
-        setImages(Images.filter(e => e.id != id))
+        setImages(Images.filter(e => e.id !== id))
       }
     })
   }
   
   return (
-    <div className="App">
+    <div className={classes.app}>
       <div className={classes.root}>
         <ImageList rowHeight={300} cols={3} gap={4} className={classes.imageList}>
         {Images.map((image) => (
+          !searchName || image.image_name.includes(searchName)?
           <ImageListItem key={image.id} cols={1} rows={1}>
             <img src={image.image_file && URL.createObjectURL(image.image_file)} alt={image.image_name} />
             <ImageListItemBar
@@ -148,25 +157,29 @@ function App() {
               actionPosition="left"
               className={classes.titleBar}
             />
-          </ImageListItem>
+          </ImageListItem>:null
         ))}
       </ImageList>
       </div>
       <Divider  variant="middle"/>
-      <div className = 'Actions'>
-      <input
-        accept="image/*"
-        style={{display: 'none'}}
-        onChange={addImages}
-        id="contained-button-file"
-        multiple
-        type="file"
-      />
-      <label htmlFor="contained-button-file">
-        <Button variant="contained" color="primary" component="span">
-          Upload
-        </Button>
-      </label>
+      <div className = {classes.actions}>
+        <input
+          accept="image/*"
+          style={{display: 'none'}}
+          onChange={addImages}
+          id="contained-button-file"
+          multiple
+          type="file"
+        />
+        <label htmlFor="contained-button-file">
+          <Button variant="contained" color="primary" component="span">
+            Upload
+          </Button>
+        </label>
+        <Input className={classes.search_name_input} 
+        placeholder="Search by name" 
+        value={searchName} 
+        onChange={e => setSearchName(e.target.value)}/>
       </div>
     </div>
   );
