@@ -6,11 +6,6 @@ from flask_cors import CORS
 
 from server.db import init_app, bulk_insert, bulk_delete, fetch_all
 
-# export FLASK_APP=server
-# export FLASK_ENV=development
-# flask init-db
-# flask run
-
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
     CORS(app)

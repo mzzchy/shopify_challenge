@@ -14,12 +14,13 @@ cd shopify_challenge
 
 3. Install backend server
 ```
-pip install .
+pip install -e .
 ```
 4. Start the Backend Server
 ```
 export FLASK_APP=server
 export FLASK_ENV=development
+flask init-db
 flask run
 ``` 
 To verify the backend is setup successfully, please go to `http://localhost:5000/` and make sure you see `welcome to image repo backend`.
@@ -31,6 +32,10 @@ npm start
 ```
 7. Now Go check the image repo on `http://localhost:3000/`
 
+## Run test
+```
+pytest .
+```
 ## Structure
 The frontend is writted by ReactJS and the backend is writted by Python with Flask. All Images is converted to Blob and stored in Sqlite. 
 
