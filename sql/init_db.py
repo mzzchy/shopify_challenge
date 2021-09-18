@@ -1,9 +1,0 @@
-import sqlite3
-
-connection = sqlite3.connect('image.db')
-
-with open('image_schema.sql') as f:
-    connection.executescript(f.read())
-
-connection.commit()
-connection.close()
